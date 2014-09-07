@@ -1,4 +1,7 @@
 <?php
+/**
+ * 新浪天气接口
+ **/
 class SinaWeatherInterface {
 
     private static $_URL = 'http://php.weather.sina.com.cn/xml.php?password=DJOYnieT8234jlsK';

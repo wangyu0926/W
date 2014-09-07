@@ -1,8 +1,6 @@
 <?php
 /**
  * 路由器
- * limingyou
- * @since 2014-06-05
  */
 class Router {
 
@@ -16,7 +14,7 @@ class Router {
 
     //路由类型
     const ROUTE_TYPE_STR    = 0;    //静态路由
-    const ROUTE_TYPE_WC     = 1;    //wildcard 通配符
+    const ROUTE_TYPE_WC     = 1;    //通配符
     const ROUTE_TYPE_RE     = 2;    //正则
 
     //路由类型对应key
@@ -26,10 +24,9 @@ class Router {
 
     /**
      * 设置路由参数
-     * @author limingyou
      */
     public static function setParams() {
-        $uri = self::$_URI = isset($_GET['_ac'])&& $_GET['_ac'] ? rtrim($_GET['_ac'], '/') : '';
+        $uri = self::$_URI = isset($_GET['_ac']) && $_GET['_ac'] ? rtrim($_GET['_ac'], '/') : '';
         $cParams = self::parseRoute();
         $cParams['get'] = $_GET;
         $cParams['post'] = $_POST;
@@ -156,7 +153,7 @@ class Router {
      */
     private static function _reSetArgs(&$args, $match) {
         $newArgs = array();
-        foreach( $args as $k=>$val ) {
+        foreach($args as $k=>$val) {
             $newArgs[$val] = $match[$k+1];
         }
         $args = $newArgs;

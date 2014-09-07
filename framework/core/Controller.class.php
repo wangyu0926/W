@@ -31,7 +31,7 @@ class Controller {
      * 获取页面内容
      * $param string $tplName 模板名，无需传具体路径
      */
-    protected function fetch($tplName, $value=array()) {
+    protected function fetch($tplName, $value = array()) {
         $tplFile = $this->getTplFile($tplName);
         $value['tplPath'] = $this->tplPath;
         return $this->view->fetch($tplFile, $value);

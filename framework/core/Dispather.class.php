@@ -47,16 +47,16 @@ class Dispather {
     }
 
     private static function _checkCParams(&$cParams) {
-        if( !isset($cParams['app']) || ( isset($cParams['app']) && empty($cParams['app']) ) ) {
-            $cParams['app'] = ROOT_PATH . 'app/';
+        if(!isset($cParams['app']) || ( isset($cParams['app']) && empty($cParams['app']))) {
+           $cParams['app'] = ROOT_PATH . 'app/';
         }
-        if( !isset($cParams['module']) || ( isset($cParams['module']) && empty($cParams['module']) ) ) {
-            $cParams['module'] = '';
+        if(!isset($cParams['module']) || ( isset($cParams['module']) && empty($cParams['module']))) {
+           $cParams['module'] = '';
         }
-        if( !isset($cParams['controller']) || ( isset($cParams['controller']) && empty($cParams['controller']) ) ) {
-            $cParams['controller'] = 'index';
+        if(!isset($cParams['controller']) || ( isset($cParams['controller']) && empty($cParams['controller']))) {
+           $cParams['controller'] = 'index';
         }
-        if( !isset($cParams['action']) || ( isset($cParams['action']) && empty($cParams['action']) ) ) {
+        if(!isset($cParams['action']) || ( isset($cParams['action']) && empty($cParams['action']))) {
             $cParams['action'] = 'run';
         }
     }

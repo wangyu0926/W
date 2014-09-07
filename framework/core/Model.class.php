@@ -6,39 +6,38 @@
 
 abstract class Model {
 
-    protected $MasterConf;
-    protected $SlaveConf;
-    protected $dbName;
+    protected $_masterConf;
+    protected $_slaveConf;
+    protected $_dbName;
 
     //表名
-    protected $tableName;
+    protected $_tableName;
 
     //表字段
-    protected $fields;
+    protected $_fields;
 
     //主从库变量
-    protected $mdb;
-    protected $sdb;
+    protected $_mdb;
+    protected $_sdb;
 
-    function __construct() {
+    public function __construct() {
         $this->_init();
-
-        $this->mdb = new Mysql($this->MasterConf, $this->dbName, $this->tableName);
-        $this->sdb = new Mysql($this->SlaveConf, $this->dbName, $this->tableName);
+        $this->_mdb = new Mysql($this->_masterConf, $this->_dbName, $this->_tableName);
+        $this->_sdb = new Mysql($this->_slaveConf, $this->_dbName, $this->_tableName);
     }
 
     public function add($array, $returnID = true) {
-        $db = $this->getDb();
+        $db = $this->_getDb();
         return $db->add($array, $returnID);
     }
 
-    public function update( $where, $update, $limit=1 ) {
-        $db = $this->getDb();
+    public function update($where, $update, $limit = 1) {
+        $db = $this->_getDb();
         return $db->update($where, $update, $limit);
     }
 
-    public function del($where, $limit=1) {
-        $db = $this->getDb();
+    public function del($where, $limit = 1) {
+        $db = $this->_getDb();
         return $db->del($where, $limit);
     }
 
@@ -59,7 +58,7 @@ abstract class Model {
      * @param string $orderBy etc: 'order by id desc'
      */
     public function getRows($fields='*', $where=array(), $page=1, $size=10, $orderBy='') {
-        $db = $this->getDb();
+        $db = $this->_getDb();
         return $db->getRows($fields, $where, $page, $size, $orderBy);
     }
 
@@ -77,8 +76,8 @@ abstract class Model {
      *  )
      *  @param string $orderBy etc: 'order by id desc'
      */
-    public function getOne($fields='*', $where=array(), $orderBy='') {
-        $db = $this->getDb();
+    public function getOne($fields = '*', $where = array(), $orderBy = '') {
+        $db = $this->_getDb();
         return $db->getOne($fields, $where, $orderBy);
     }
 
@@ -86,8 +85,8 @@ abstract class Model {
     /**
      * 获取总行数
      */
-    public function getRowsCount($where=array(), $formatData=false) {
-        $db = $this->getDb();
+    public function getRowsCount($where = array(), $formatData = false) {
+        $db = $this->_getDb();
         return $db->getRowsCount($where, $formatData);
     }
 
@@ -95,12 +94,12 @@ abstract class Model {
      * 获取当前表字段
      */
     public function getFields() {
-        $db = $this->getDb();
+        $db = $this->_getDb();
         return $db->getFields();
     }
 
-    private function getDb($master=false) {
-        return $master ? $this->mdb : $this->sdb;
+    private function _getDb($master = false) {
+        return $master ? $this->_mdb : $this->_sdb;
     }
 
     //子类中需初始化

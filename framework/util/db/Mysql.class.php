@@ -1,10 +1,7 @@
 <?php
 /**
  * mysql操作基类
- * @author 李明友
- * @since 2014-06-20
  */
-
 class Mysql {
 
     //是否长连接，默认false
@@ -34,12 +31,11 @@ class Mysql {
      * @param array $dbValues
      */
     public function __construct($dbConfig, $dbName, $tableName) {
-        $this->host     = $dbConfig['host'];
-        $this->port     = $dbConfig['port'];
-        $this->dbUser   = $dbConfig['dbUser'];
-        $this->dbPasswd = $dbConfig['dbPasswd'];
-
-        $this->dbName   = $dbName;
+        $this->host      = $dbConfig['host'];
+        $this->port      = $dbConfig['port'];
+        $this->dbUser    = $dbConfig['dbUser'];
+        $this->dbPasswd  = $dbConfig['dbPasswd'];
+        $this->dbName    = $dbName;
         $this->tableName = $tableName;
     }
 
@@ -56,7 +52,6 @@ class Mysql {
         $sql = 'insert into `' . $this->tableName . '` set ' . $data['str'];
         $sth = $conn->prepare($sql);
         $res = $sth->execute($data['data']);
-        //$arr = $sth->errorInfo(); print_r($arr);
 
         return $returnID ? $conn->lastInsertId() : $res;
     }
@@ -69,19 +64,11 @@ class Mysql {
      * @return bool
      */
     public function update(array $where, array $update, $limit=1) {
-        /*
-        if( empty($where) || empty($update) ) {
-            throw new BaseException('不允许对全库进行更新，或者更新内容为空'); return false;
-        }
-        */
-
-        //更新
         $conn = $this->getConnect();
         $value = $this->_formatValue($update, true);
         $formatData = $this->formatWhere($where);
-        //$data = array_merge($value['data'], $formatData['data']);
 
-        $sql = 'update ' . $this->tableName . ' set ' . $value['str'] . ' where ' . $formatData['where'] 
+        $sql = 'update ' . $this->tableName . ' set ' . $value['str'] . ' where ' . $formatData['where']
                 . ' limit ' . $limit;
         $sth = $conn->prepare($sql);
         return $sth->execute($formatData['data']);
@@ -94,13 +81,6 @@ class Mysql {
      * @return bool
      */
     public function del(array $where, $limit=1) {
-        /*
-        if( empty($where) || empty($update) ) {
-            throw new BaseException('不允许对全库进行删除操作'); return false;
-        }
-        */
-
-        //更新
         $conn = $this->getConnect();
         $formatData = $this->formatWhere($where);
 
@@ -125,17 +105,15 @@ class Mysql {
        @param int $size
        @param string $orderBy etc: 'order by id desc'
      */
-    public function getRows($fields='', $where=array(), $page=1, $size=10, $orderBy='', $isCount=false) {
+    public function getRows($fields = '', $where = array(), $page = 1, $size = 10, $orderBy = '', $isCount = false) {
         $fields = $fields=='' ? '*' : $fields;
         $formatData = $this->formatWhere($where);
         $where = $formatData['where']=='' ? '' : ' where ' . $formatData['where'];
         $start = ($page -1) * $size;
 
         $conn = $this->getConnect();
-        $sth = $conn->prepare('SELECT ' . $fields . ' FROM ' . $this->tableName . $where 
+        $sth = $conn->prepare('SELECT ' . $fields . ' FROM ' . $this->tableName . $where
             . ' ' . $orderBy . ' limit ' . $start . ','.$size );
-        //var_dump($sth);
-        //print_r($formatData['data']);
         $res = $sth->execute($formatData['data']);
         $result = $sth->fetchAll( $this->resultMode );
 
@@ -154,13 +132,13 @@ class Mysql {
     /**
      * 获取总行数
      */
-    public function getRowsCount($where=array(), $formatData=false) {
+    public function getRowsCount($where = array(), $formatData = false) {
         $conn = $this->getConnect();
         if( !$formatData ) {
             $formatData = $this->formatWhere($where);
         }
 
-        $where = $formatData['where']=='' ? '' : ' where ' . $formatData['where'];
+        $where = $formatData['where'] == '' ? '' : ' where ' . $formatData['where'];
 
         $sth = $conn->prepare('SELECT count(*) n FROM ' . $this->tableName . $where);
         $res = $sth->execute($formatData['data']);
@@ -184,16 +162,14 @@ class Mysql {
        @param string $orderBy etc: 'order by id desc'
      */
     public function getOne($fields='', $where=array(), $orderBy='') {
-        $fields = $fields=='' ? '*' : $fields;
+        $fields = $fields == '' ? '*' : $fields;
         $formatData = $this->formatWhere($where);
-        $where = $formatData['where']=='' ? '' : ' where ' . $formatData['where'];
+        $where = $formatData['where'] == '' ? '' : ' where ' . $formatData['where'];
 
         $conn = $this->getConnect();
-        $sth = $conn->prepare('SELECT ' . $fields . ' FROM ' . $this->tableName . $where 
+        $sth = $conn->prepare('SELECT ' . $fields . ' FROM ' . $this->tableName . $where
             . ' ' . $orderBy);
-        //var_dump($sth);
         $res = $sth->execute($formatData['data']);
-        //$arr = $sth->errorInfo(); print_r($arr);
         $result = $sth->fetch( $this->resultMode );
         return $result;
     }
@@ -205,7 +181,6 @@ class Mysql {
     public function query($sql) {
         $conn = $this->getConnect();
         $cq = $conn->query($sql);
-        //$cq->setFetchMode(PDO::FETCH_ASSOC);
         $rows = $cq->fetchAll( $this->resultMode );
         return $rows;
     }
@@ -227,21 +202,20 @@ class Mysql {
      */
     public function getConnect() {
         if( $this->_conn ) {
-            //$this->_conn->query('SET NAMES UTF8');
             return $this->_conn;
         }
         $conn = $this->connect();
         $conn->query('SET NAMES UTF8');
         return $conn;
     }
-    
+
     /**
      * 连接数据库
      */
     private function connect() {
         try {
             $this->_pcon = array(PDO::ATTR_PERSISTENT => $this->pconnect);
-            $this->_conn = new PDO("mysql:host={$this->host};port={$this->port};dbname={$this->dbName};", 
+            $this->_conn = new PDO("mysql:host={$this->host};port={$this->port};dbname={$this->dbName};",
                 $this->dbUser,
                 $this->dbPasswd);
             return $this->_conn;
@@ -348,7 +322,7 @@ class Mysql {
                 $val[$key] = $v;
             }
         }
-        
+
         return array(
             'str'   => implode(',', $ret),
             'data'  => $val,

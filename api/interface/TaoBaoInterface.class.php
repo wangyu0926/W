@@ -1,7 +1,6 @@
 <?php
-
 /**
- * 淘宝接口
+ * 淘宝旅行接口
  **/
 class TaoBaoInterface {
 

@@ -4,24 +4,24 @@
 define('TIME', microtime(true));
 
 //判断是否定义项目名，为定义则默认为主项目
-if( !defined('APP_NAME') ) {
-    define('APP_NAME', 'main');
+if(!defined('APP_NAME')) {
+    define('APP_NAME', 'w');
 }
 
 //程序主目录
 define('ROOT_PATH', dirname(__FILE__) . '/');
 
-//时区设置
+//北京时区设置
 date_default_timezone_set('PRC');
 
 //公共配置路径
 define('COMMON_PATH', ROOT_PATH . 'config/common/');
 
 //加载环境配置
-if(file_exists(COMMON_PATH . 'anc.php')) {
+if(is_file(COMMON_PATH . 'anc.php')) {
     require COMMON_PATH . 'anc.php';
 } else {
-    exit('config/common目录下没有找到anc.php锚文件，请重命名anc.sample.php文件使用');
+    exit('config/common目录下没有找到anc.php文件，请重命名anc.sample.php文件使用');
 }
 
 //路由配置目录
@@ -51,10 +51,11 @@ define('CACHE_PATH', ROOT_PATH . 'cache/');
 
 //加载全局配置，核心类文件
 require CONF_PATH . 'global.php';
-require FRAMEWORK_PATH . 'core/Sail.class.php';
+require FRAMEWORK_PATH . 'core/W.class.php';
 
 header('content-Type: text/html; charset=utf-8');
 
 W::run();
 
-#echo microtime(true) - TIME;
+//运行时间
+//echo microtime(true) - TIME;

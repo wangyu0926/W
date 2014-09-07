@@ -13,7 +13,7 @@ class View {
      * $key mixed $key=string时直接设置页面key变量, $key=array时设置$key数组中的key变量值为$key中的$val
      * $value mixed 可以为字符串，也可为数组，在$key为数组时传空
      */
-    public function assign($key, $value='') {
+    public function assign($key, $value = '') {
         if(is_array($key)) {
             foreach($key as $k => $v) {
                 $this->$k = $v;
@@ -26,13 +26,13 @@ class View {
     /**
      * 获取模板内容
      */
-    public function fetch($tplFile, $value=array()) {
+    public function fetch($tplFile, $value = array()) {
         if(!empty($value)) {
             $this->assign($value);
         }
         //获取模板输出
         ob_start();
-        if(!file_exists($tplFile)) {
+        if(!is_file($tplFile)) {
             throw new BaseException('找不到模板文件：' . $tplFile);
         }
         require $tplFile;
@@ -42,13 +42,12 @@ class View {
         return $content;
     }
 
-    public function display($tplFile, $value=array()) {
+    public function display($tplFile, $value = array()) {
         $content = $this->fetch($tplFile, $value);
-
         echo $content;
     }
 
-    public function setContentType($contentType='') {
+    public function setContentType($contentType = '') {
         header('Content-Type:'.$contentType.'; charset=utf-8');
     }
 

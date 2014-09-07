@@ -9,7 +9,6 @@ return array(
     'W'                 => FRAMEWORK_PATH . 'core/W.class.php',
     'Router'            => FRAMEWORK_PATH . 'core/Router.class.php',
     'Dispather'         => FRAMEWORK_PATH . 'core/Dispather.class.php',
-    //'BaseException'     => FRAMEWORK_PATH . 'core/BaseException.class.php',
     'Controller'        => FRAMEWORK_PATH . 'core/Controller.class.php',
     'View'              => FRAMEWORK_PATH . 'core/View.class.php',
     'Model'             => FRAMEWORK_PATH . 'core/Model.class.php',
@@ -25,7 +24,6 @@ return array(
     'Session'           => FRAMEWORK_PATH . 'util/common/Session.class.php',
     'Util'              => FRAMEWORK_PATH . 'util/common/Util.class.php',
     'Helper'            => FRAMEWORK_PATH . 'util/common/Helper.class.php',
-
     'Http'              => FRAMEWORK_PATH . 'util/http/Http.class.php',
     'Request'           => FRAMEWORK_PATH . 'util/http/Request.class.php',
 );
