@@ -119,7 +119,7 @@ class Mysql {
 
         //获得总行数
         $ttl = 0;
-        if( $isCount ) {
+        if($isCount) {
             $ttl = $this->getRowsCount(array(), $formatData);
         }
 
@@ -134,7 +134,7 @@ class Mysql {
      */
     public function getRowsCount($where = array(), $formatData = false) {
         $conn = $this->getConnect();
-        if( !$formatData ) {
+        if(!$formatData) {
             $formatData = $this->formatWhere($where);
         }
 
@@ -152,16 +152,16 @@ class Mysql {
      * @param string $fields
      * @param array $where 查询条件数组
      * array(
-            array('name', '=', 'lmyoaoa'),
-            array('number', '>', 15),
-            array('id', 'in', array(1,2,3), false),     //此处false/0代表是否给数组加上单引号
-            array('id', 'between', ''),
-
-            'xxx=0 and oo=9 or jj=3' //自定义sql
-       )
-       @param string $orderBy etc: 'order by id desc'
+     *       array('name', '=', 'lmyoaoa'),
+     *       array('number', '>', 15),
+     *       array('id', 'in', array(1,2,3), false),     //此处false/0代表是否给数组加上单引号
+     *       array('id', 'between', ''),
+     *
+     *       'xxx=0 and oo=9 or jj=3' //自定义sql
+     *  )
+     *  @param string $orderBy etc: 'order by id desc'
      */
-    public function getOne($fields='', $where=array(), $orderBy='') {
+    public function getOne($fields = '', $where = array(), $orderBy = '') {
         $fields = $fields == '' ? '*' : $fields;
         $formatData = $this->formatWhere($where);
         $where = $formatData['where'] == '' ? '' : ' where ' . $formatData['where'];
@@ -188,7 +188,7 @@ class Mysql {
     /**
      * 获取数据库字段
      */
-    public function getFields($table='') {
+    public function getFields($table = '') {
         $table = $table ? $table : $this->tableName;
         $conn = $this->getConnect();
         $cq = $conn->query("DESCRIBE $table");
@@ -256,7 +256,7 @@ class Mysql {
             return $formatData;
         }
 
-        foreach( $array as $k => $v ) {
+        foreach($array as $k => $v) {
             $preBra = $endBra = '';
             $key = ':' . $v[0];
             if( is_array($v) && $v[2] !== '' ) {
@@ -301,7 +301,6 @@ class Mysql {
             }
         }
 
-        //print_r($formatData);
         $formatData['where'] = implode(' and ', $formatData['where']);
         return $formatData;
     }
@@ -310,13 +309,13 @@ class Mysql {
      * 将数组格式化为逗号隔开的字符串
      */
     protected function _formatValue($array, $returnString = true) {
-        if( $returnString) {
+        if($returnString) {
             foreach( $array as $k => $v ) {
                 $ret[] = $k . '=\'' . addslashes($v) . '\'';
             }
             $val = array();
         } else {
-            foreach( $array as $k => $v ) {
+            foreach($array as $k => $v) {
                 $key = ':' . $k;
                 $ret[] = $k . '=' . $key;
                 $val[$key] = $v;

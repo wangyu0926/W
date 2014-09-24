@@ -1,6 +1,6 @@
 <?php
 
-class Pinyin{
+class Pinyin {
         /// {{{ 汉字与拼音的映射数组
         public static $PINYIN_DICT = Array(
                 65 => Array('a'),
@@ -22552,7 +22552,7 @@ class Pinyin{
      *
      * @returns
      */
-    public static function chinese2pinyin($ch,$returyType='string', $offset=0, $length=0, $yindiao = false, $encoding='utf-8') {
+    public static function chinese2pinyin($ch, $returyType='string', $offset=0, $length=0, $yindiao = false, $encoding='utf-8') {
         $tmpArr = Array();
         if ($length===0) {
             $length = mb_strlen($ch,$encoding);

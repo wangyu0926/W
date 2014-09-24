@@ -10,8 +10,8 @@ class Util {
      * @author limingyou
      */
     public static function isLogin() {
-        /*获取登录用户信息*/
-        if( Request::getCookie('_ido_uid', 0, 'int') ) {
+        //获取登录用户信息
+        if(Request::getCookie('_ido_uid', 0, 'int')) {
             return true;
         }
         return false;
@@ -19,14 +19,13 @@ class Util {
 
     /**
      * 页面跳转
-     * @author limingyou
      * @param string $url 跳转地址
-     * @param bool $urldecode 是否使用urldecode
-     * @param int $code 跳转代码301,302,404...
+     * @param bool   $urldecode 是否使用urldecode
+     * @param int    $code 跳转代码301,302,404...
      * @return void
      */
     public static function turnTo($url, $urldecode=false, $code=302) {
-        if( $urldecode ) {
+        if($urldecode) {
             $url = urldecode($url);
         }
         header("Location: {$url}");
@@ -40,7 +39,7 @@ class Util {
         echo htmlspecialchars($string);
     }
 
-    public static function weekDay( $n ) {
+    public static function weekDay($n) {
         $array = array('1'=>'一', '二', '三', '四', '五', '六', '日',);
         return $array[$n];
     }
@@ -48,7 +47,7 @@ class Util {
     /**
     传入大写的汉字
     **/
-    public static function weekConfig( $n ) {
+    public static function weekConfig($n) {
         $array = array(
             '一'=>'月',
             '二'=>'火',

@@ -10,7 +10,6 @@ class Dispather {
 
     /**
      * 分发程序
-     * @author limingyou
      * @param array $cParams 项目参数
      * app  string 控制器主目录
      * module string 模块

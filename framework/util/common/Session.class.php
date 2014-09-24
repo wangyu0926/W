@@ -10,7 +10,7 @@ class Session {
             $initFinish = TRUE;
             session_start();
 
-            if( session_id() == 'deleted' ) {
+            if(session_id() == 'deleted') {
                 $newId = 's_' . str_replace('.', '_', microtime(true)) . '_' . rand(1000, 9999);
                 session_unset();
                 session_destroy();

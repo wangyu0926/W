@@ -1,9 +1,7 @@
 <?php
 /**
  * HTTP获取相关操作
- * @author limingyou
  */
-
 class Request {
 
     /**
@@ -57,21 +55,20 @@ class Request {
      * @param bool $isQuery 是否获取参数
      * @return string
      */
-    public static function thisPageUrl($isQuery=true) {
+    public static function thisPageUrl($isQuery = true) {
         if($isQuery && $_SERVER['QUERY_STRING']) {
             $return_url = urlencode($_SERVER['SCRIPT_URI'].'?'.$_SERVER['QUERY_STRING']);
-        }else{
+        } else {
             $return_url = urlencode($_SERVER['SCRIPT_URI']);
         }
-
         return $return_url;
     }
 
-    private static function _stripTags($string, $isHTML=false) {
+    private static function _stripTags($string, $isHTML = false) {
         return !$isHTML ? strip_tags(trim($string)) : trim($string);
     }
 
-    private static function _htmlspecialchars($string, $isHTML=false) {
+    private static function _htmlspecialchars($string, $isHTML = false) {
         return !$isHTML ? htmlspecialchars(trim($string)) : trim($string);
     }
 
@@ -82,9 +79,9 @@ class Request {
      * @param $default          如果数据不存在，默认返回的值。默认情况下为空
      * @return string
      */
-    public static function getPost($key, $default = '', $type='', $isHTML=false) {
+    public static function getPost($key, $default = '', $type = '', $isHTML = false) {
         if (array_key_exists($key, $_POST)) {
-            if( $type == 'int' ) {
+            if($type == 'int') {
                 return intval($_POST[$key]);
             }
             return self::_htmlspecialchars($_POST[$key], $isHTML);
@@ -99,9 +96,9 @@ class Request {
      * @param $default          如果数据不存在，默认返回的值。默认情况下为空
      * @return string
      */
-    public static function getGet($key, $default = '', $type='', $isHTML=false) {
+    public static function getGet($key, $default = '', $type = '', $isHTML = false) {
         if (array_key_exists($key, $_GET)) {
-            if( $type == 'int' ) {
+            if($type == 'int') {
                 return intval($_GET[$key]);
             }
             return self::_htmlspecialchars($_GET[$key], $isHTML);
@@ -116,7 +113,7 @@ class Request {
      * @param $isHTML          返回的结果中是否允许html标签，默认为false
      * @return string
      * */
-    public static function getRequest($key, $default = '', $type='', $isHTML = false) {
+    public static function getRequest($key, $default = '', $type = '', $isHTML = false) {
         if (array_key_exists($key, $_REQUEST)) {
             if( $type == 'int' ) {
                 return intval($_REQUEST[$key]);
@@ -132,8 +129,8 @@ class Request {
     /// @param $default         如果数据不存在，默认返回的值。默认情况下为空
     /// @param $isHTML          返回的结果中是否允许html标签，默认为false
     /// @return string
-    public static function getCookie($key, $default = '', $type='', $isHTML = false) {
-        if (isset ($_COOKIE[$key])) {
+    public static function getCookie($key, $default = '', $type = '', $isHTML = false) {
+        if (isset($_COOKIE[$key])) {
             if( $type == 'int' ) {
                 return intval($_COOKIE[$key]);
             }
@@ -148,7 +145,7 @@ class Request {
      * @param $returnAll        如果有多个ip时，是否会部返回。默认情况下为false
      * @return string|array|false
      */
-    public static function getIp($useInt = true, $returnAll=false) {
+    public static function getIp($useInt = true, $returnAll = false) {
         $ip = getenv('HTTP_CLIENT_IP');
         if($ip && strcasecmp($ip, "unknown") && !preg_match("/192\.168\.\d+\.\d+/", $ip)) {
             return self::_returnIp($ip, $useInt, $returnAll);
